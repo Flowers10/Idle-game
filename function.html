@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'collecter')">Collect</button>
+     <button class="tablinks" onclick="openTab(event, 'shop')">Shop</button>
+     <button class="tablinks" onclick="openTab(event, 'info')">Info</button>
+
+
+  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+    <title>Great Game</title>
+    <div id="collecter" class="tabcontent">
+		<h1> <span id="iron">0</span> Iron</h1>
+		<h3> <span id="steel">0</span> Steel</h3>
+    <button onclick="add()">Collect Iron</button>   
+		<button onclick="addSteel()">Collect Steel</button>
+    </div>
+     </head>
+    <body>
+    <script>
+      var ironcount = 0;
+			var autoMiner = 0;
+			var minerCost = 12;
+			var Steelproduction = false;
+			var Steelcount = 0;
+			var steelCost = 100;
+
+			function update() {
+				document.getElementById('text').value = ironcount;
+        document.title = ironcount + " iron"
+				document.getElementById("amountAutoMine").innerHTML = "You own " + autoMiner + " Auto Mines"
+			}
+
+// 			function update1() {
+// 				document.getElementById('text2').value = Steelcount
+//
+// 			}
+
+			function timer() {
+				ironcount = ironcount + autoMiner;
+				update()
+			}
+
+			setInterval(timer, 1000)
+
+    	function add() {
+      	ironcount = ironcount + 1;
+				document.getElementById('iron').innerHTML = ironcount;
+        update()
+      }
+
+		</script>
+     things
+    <br><br>
+    <div id="info" class="tabcontent">
+    <button><a href="#" onclick="save()">Save</a></button>
+    <button><a href="#" onclick="load()">Load</a></button>
+		<br><br>
+    </div>
+		<p></p>
+    <div id="shop" class="tabcontent">
+		<button onclick="buyAutoMiner()">Buy Auto Miner</button>
+<!-- 			<button onclick="buySteelproduction()">Buy Steel production</button> -->
+		<p id="costAutoMine"> Iron</p>
+    <p id="amountAutoMine">You own 0 auto mines</p>
+    </div>
+    <script>
+    function openTab(evt, tabName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+    </script>
+    <script>
+    function save() {
+    			localStorage.setItem("ironcount", ironcount)
+    }
+
+    function load() {
+    	ironcount = localStorage.getItem("ironcount");
+      ironcount = parseInt("ironcount");
+    }  
+    function buyAutoMiner() {
+			if(ironcount >= minerCost) {
+				 ironcount = ironcount - Math.round(minerCost);
+				 autoMiner = autoMiner + 1;
+				 minerCost = minerCost * 1.15;
+				document.getElementById("costAutoMine").innerHTML = Math.round(minerCost) + " iron";
+				update()
+			}
+			else {
+				alert("Not Enough Currency")
+			}
+		}
+
+// 		function buySteelproduction() {
+// 			if(ironcount >= steelCost) {
+// 				var Steelproduction = true;
+// 				ironcount -= 1;
+// 				update1()
+// 			}
+// 				else {
+// 					alert('Not Enough Currency')
+// 				}
+// 		}
+			
+//  		function addSteel() {
+//  			if(Steelproduction = true)
+// 			Steelcount += 1;
+//			document.getElementById('steel').innerHTML = Steelcount;
+// 			update1()
+//  		}
+    </script>
+    
+  </body>
+</html>
